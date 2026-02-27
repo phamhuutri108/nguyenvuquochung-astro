@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Contact — Nguyễn Vũ Quốc Hưng" currentPath="/contact">
+  <div class="contact">
+
+    <!-- Left: Profile -->
+    <div class="contact__left">
+      <a href="/about" class="contact__profile-link" aria-label="About">
+        <div class="contact__photo-wrap">
+          <img
+            src="/images/profile.png"
+            alt="Nguyễn Vũ Quốc Hưng"
+            class="contact__photo"
+            onerror="this.style.display='none'"
+          />
+        </div>
+        <h2 class="contact__name">
+          NGUYỄN VŨ<br />QUỐC HƯNG
+        </h2>
+      </a>
+    </div>
+
+    <!-- Right: Contact info -->
+    <div class="contact__right">
+      <div class="contact__content page-enter">
+
+        <h1 class="contact__title">
+          <span class="l-en">CONTACT</span>
+          <span class="l-vi">LIÊN HỆ</span>
+        </h1>
+
+        <div class="contact__items">
+
+          <!-- Phone -->
+          <div class="contact__item">
+            <span class="contact__item-label">
+              <span class="l-en">PHONE</span>
+              <span class="l-vi">ĐIỆN THOẠI</span>
+            </span>
+            <a href="tel:+84942076741" class="contact__item-value">
+              0942 076 741
+            </a>
+          </div>
+
+          <!-- Email -->
+          <div class="contact__item">
+            <span class="contact__item-label">EMAIL</span>
+            <a href="mailto:hung.quochung911@gmail.com" class="contact__item-value">
+              hung.quochung911@gmail.com
+            </a>
+          </div>
+
+          <!-- Facebook -->
+          <div class="contact__item">
+            <span class="contact__item-label">FACEBOOK</span>
+            <a
+              href="https://www.facebook.com/nguyenquochungkakakaka"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact__item-value contact__item-value--link"
+            >
+              FACEBOOK
+              <span class="contact__ext-arrow">↗</span>
+            </a>
+          </div>
+
+          <!-- Instagram -->
+          <div class="contact__item">
+            <span class="contact__item-label">INSTAGRAM</span>
+            <a
+              href="https://www.instagram.com/quhungkkkk/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact__item-value contact__item-value--link"
+            >
+              INSTAGRAM
+              <span class="contact__ext-arrow">↗</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+.contact {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  min-height: 100vh;
+}
+
+/* Left side */
+.contact__left {
+  position: relative;
+  overflow: hidden;
+}
+
+.contact__profile-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  position: relative;
+}
+
+.contact__photo-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.contact__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  mask-image: linear-gradient(to right, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  transition: transform 0.6s ease;
+}
+
+.contact__profile-link:hover .contact__photo {
+  transform: scale(1.02);
+}
+
+.contact__name {
+  position: relative;
+  z-index: 2;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.92;
+  color: var(--color-accent);
+  letter-spacing: 0.02em;
+  padding: 1.5rem;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s;
+}
+
+.contact__profile-link:hover .contact__name {
+  color: #ff1a1a;
+}
+
+/* Right side */
+.contact__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 3.5rem;
+}
+
+.contact__content {
+  max-width: 420px;
+}
+
+.contact__title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.contact__items {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.contact__item-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.25);
+  text-transform: uppercase;
+}
+
+.contact__item-value {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.contact__item-value:hover {
+  color: #fff;
+}
+
+.contact__item-value--link {
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.15);
+  text-underline-offset: 4px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.contact__item-value--link:hover {
+  text-decoration-color: rgba(255,255,255,0.6);
+}
+
+.contact__ext-arrow {
+  font-size: 0.8em;
+  opacity: 0.5;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.contact__item-value:hover .contact__ext-arrow {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+/* i18n */
+[data-lang="en"] .l-vi { display: none; }
+[data-lang="vi"] .l-en { display: none; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .contact {
+    grid-template-columns: 1fr;
+  }
+
+  .contact__left {
+    min-height: 50vh;
+  }
+
+  .contact__right {
+    padding: 2.5rem 1.5rem;
+  }
+}
+</style>

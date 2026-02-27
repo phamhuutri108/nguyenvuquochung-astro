@@ -1,0 +1,84 @@
+# Decap CMS — GitHub OAuth backend (via Netlify OAuth proxy)
+# Does NOT require Netlify Identity (deprecated 2026)
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME   # <-- update this after GitHub push
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+# Where uploaded media is stored
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# ─── Content Collections ───────────────────────────────────────────────────────
+
+collections:
+
+  # PRODUCTION projects
+  - name: "production"
+    label: "Production (Sản Xuất)"
+    folder: "src/content/production"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title (EN)", name: "title", widget: "string" }
+      - { label: "Tên (VI)", name: "titleVi", widget: "string", required: false }
+      - { label: "Year", name: "year", widget: "number", required: false }
+      - { label: "Description (EN)", name: "description", widget: "string", required: false }
+      - { label: "Mô tả (VI)", name: "descriptionVi", widget: "string", required: false }
+      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
+      - { label: "Order", name: "order", widget: "number", default: 0, required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # EDITOR projects
+  - name: "editor"
+    label: "Editor (Dựng Phim)"
+    folder: "src/content/editor"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title (EN)", name: "title", widget: "string" }
+      - { label: "Tên (VI)", name: "titleVi", widget: "string", required: false }
+      - { label: "Year", name: "year", widget: "number", required: false }
+      - { label: "Description (EN)", name: "description", widget: "string", required: false }
+      - { label: "Mô tả (VI)", name: "descriptionVi", widget: "string", required: false }
+      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
+      - { label: "Order", name: "order", widget: "number", default: 0, required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # DIRECTOR projects
+  - name: "director"
+    label: "Director (Đạo Diễn)"
+    folder: "src/content/director"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title (EN)", name: "title", widget: "string" }
+      - { label: "Tên (VI)", name: "titleVi", widget: "string", required: false }
+      - { label: "Year", name: "year", widget: "number", required: false }
+      - { label: "Description (EN)", name: "description", widget: "string", required: false }
+      - { label: "Mô tả (VI)", name: "descriptionVi", widget: "string", required: false }
+      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
+      - { label: "Order", name: "order", widget: "number", default: 0, required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # ASSISTANT DIRECTOR projects
+  - name: "assistant-director"
+    label: "Assistant Director (Trợ Lý Đạo Diễn)"
+    folder: "src/content/assistant-director"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title (EN)", name: "title", widget: "string" }
+      - { label: "Tên (VI)", name: "titleVi", widget: "string", required: false }
+      - { label: "Year", name: "year", widget: "number", required: false }
+      - { label: "Description (EN)", name: "description", widget: "string", required: false }
+      - { label: "Mô tả (VI)", name: "descriptionVi", widget: "string", required: false }
+      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
+      - { label: "Order", name: "order", widget: "number", default: 0, required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

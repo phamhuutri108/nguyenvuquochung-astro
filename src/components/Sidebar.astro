@@ -1,0 +1,235 @@
+---
+interface Props {
+  currentPath?: string;
+}
+const { currentPath = '/' } = Astro.props;
+---
+
+<div class="sidebar-wrap">
+  <!-- Hamburger trigger -->
+  <button class="hamburger" id="sidebar-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Sidebar panel (right side) -->
+  <nav class="sidebar" id="sidebar" aria-label="Site navigation">
+    <button class="sidebar__close" id="sidebar-close" aria-label="Close menu">✕</button>
+    <ul class="sidebar__nav">
+      <li>
+        <a href="/" class={`sidebar__link ${currentPath === '/' ? 'active' : ''}`}>
+          <span class="l-en">HOME</span>
+          <span class="l-vi">TRANG CHỦ</span>
+        </a>
+      </li>
+      <li>
+        <a href="/about" class={`sidebar__link ${currentPath === '/about' ? 'active' : ''}`}>
+          <span class="l-en">ABOUT</span>
+          <span class="l-vi">VỀ TÔI</span>
+        </a>
+      </li>
+      <li>
+        <a href="/projects" class={`sidebar__link ${currentPath.startsWith('/projects') ? 'active' : ''}`}>
+          <span class="l-en">MY PROJECTS</span>
+          <span class="l-vi">DỰ ÁN</span>
+        </a>
+      </li>
+      <li class="sidebar__sub-group">
+        <a href="/projects/production" class={`sidebar__link sidebar__link--sub ${currentPath.startsWith('/projects/production') ? 'active' : ''}`}>
+          <span class="l-en">PRODUCTION</span>
+          <span class="l-vi">SẢN XUẤT</span>
+        </a>
+        <a href="/projects/editor" class={`sidebar__link sidebar__link--sub ${currentPath.startsWith('/projects/editor') ? 'active' : ''}`}>
+          <span class="l-en">EDITOR</span>
+          <span class="l-vi">DỰNG PHIM</span>
+        </a>
+        <a href="/projects/director" class={`sidebar__link sidebar__link--sub ${currentPath.startsWith('/projects/director') ? 'active' : ''}`}>
+          <span class="l-en">DIRECTOR</span>
+          <span class="l-vi">ĐẠO DIỄN</span>
+        </a>
+        <a href="/projects/assistant-director" class={`sidebar__link sidebar__link--sub ${currentPath.startsWith('/projects/assistant-director') ? 'active' : ''}`}>
+          <span class="l-en">ASSISTANT DIRECTOR</span>
+          <span class="l-vi">TRỢ LÝ ĐẠO DIỄN</span>
+        </a>
+      </li>
+      <li>
+        <a href="/contact" class={`sidebar__link ${currentPath === '/contact' ? 'active' : ''}`}>
+          <span class="l-en">CONTACT</span>
+          <span class="l-vi">LIÊN HỆ</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<script>
+  const toggle = document.getElementById('sidebar-toggle')!;
+  const sidebar = document.getElementById('sidebar')!;
+  const overlay = document.getElementById('sidebar-overlay')!;
+  const closeBtn = document.getElementById('sidebar-close')!;
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  toggle.addEventListener('click', openSidebar);
+  closeBtn.addEventListener('click', closeSidebar);
+  overlay.addEventListener('click', closeSidebar);
+
+  // Auto-close after clicking a link
+  sidebar.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      setTimeout(closeSidebar, 150);
+    });
+  });
+
+  // ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSidebar();
+  });
+</script>
+
+<style>
+/* Hamburger button */
+.hamburger {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Overlay */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Sidebar panel */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--sidebar-width, 280px);
+  height: 100vh;
+  background: #000;
+  border-left: 1px solid rgba(255,255,255,0.08);
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem 2rem 2rem;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar__close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.sidebar__close:hover {
+  color: #fff;
+}
+
+.sidebar__nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sidebar__link {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.55);
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.sidebar__link:hover,
+.sidebar__link.active {
+  color: #fff;
+}
+
+.sidebar__link.active {
+  color: var(--color-accent);
+}
+
+.sidebar__link--sub {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  padding: 0.45rem 0 0.45rem 1rem;
+  color: rgba(255,255,255,0.35);
+  border-bottom: none;
+}
+
+.sidebar__link--sub:hover,
+.sidebar__link--sub.active {
+  color: rgba(255,255,255,0.8);
+}
+
+.sidebar__sub-group {
+  padding-left: 0;
+  border-left: 1px solid rgba(255,255,255,0.08);
+  margin-left: 0.5rem;
+}
+
+/* i18n language visibility */
+[data-lang="en"] .l-vi { display: none; }
+[data-lang="vi"] .l-en { display: none; }
+</style>

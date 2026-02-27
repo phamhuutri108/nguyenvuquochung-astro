@@ -1,0 +1,420 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const softwareLogos: Record<string, string> = {
+  'Adobe Premiere Pro': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Adobe_Premiere_Pro_CC_icon.svg/48px-Adobe_Premiere_Pro_CC_icon.svg.png',
+  'CapCut': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/CapCut_Logo.svg/48px-CapCut_Logo.svg.png',
+  'Canva': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Canva_icon_2021.svg/48px-Canva_icon_2021.svg.png',
+  'Google Slides': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Google_Slides_logo_%282014-2020%29.svg/48px-Google_Slides_logo_%282014-2020%29.svg.png',
+  'Google Sheets': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Google_Sheets_logo_%282014-2020%29.svg/48px-Google_Sheets_logo_%282014-2020%29.svg.png',
+  'Google Docs': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Google_Docs_logo_%282014-2020%29.svg/48px-Google_Docs_logo_%282014-2020%29.svg.png',
+  'Adobe Photoshop': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/48px-Adobe_Photoshop_CC_icon.svg.png',
+  'Adobe After Effects': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Adobe_After_Effects_CC_icon.svg/48px-Adobe_After_Effects_CC_icon.svg.png',
+  'Adobe Illustrator': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/48px-Adobe_Illustrator_CC_icon.svg.png',
+};
+
+const softwareCategories = [
+  {
+    labelEn: 'Film Editing & Audio',
+    labelVi: 'Dựng Phim & Âm Thanh',
+    tools: ['Adobe Premiere Pro', 'CapCut'],
+    noteEn: 'Video editing, audio adjustment, effects, and efficient file organization.',
+    noteVi: 'Dựng phim, điều chỉnh âm thanh, hiệu ứng, tổ chức file hiệu quả.',
+  },
+  {
+    labelEn: 'Design & Presentation',
+    labelVi: 'Thiết Kế & Thuyết Trình',
+    tools: ['Canva', 'Google Slides'],
+    noteEn: 'Creating professional proposals, treatments, and moodboards.',
+    noteVi: 'Tạo đề xuất chuyên nghiệp, treatment và moodboard.',
+  },
+  {
+    labelEn: 'Data Management',
+    labelVi: 'Quản Lý Dữ Liệu',
+    tools: ['Google Sheets'],
+    noteEn: 'Shot lists, shooting boards, budget planning, expense tracking.',
+    noteVi: 'Danh sách cảnh quay, bảng quay, lập kế hoạch ngân sách, theo dõi chi phí.',
+  },
+  {
+    labelEn: 'Documents',
+    labelVi: 'Văn Bản',
+    tools: ['Google Docs'],
+    noteEn: 'Writing recaps, notes, contracts, and permits.',
+    noteVi: 'Viết recap, ghi chú, hợp đồng và giấy phép.',
+  },
+  {
+    labelEn: '3D Storyboard',
+    labelVi: 'Storyboard 3D',
+    tools: ['Cine Tracer'],
+    noteEn: 'Developing visual scripts and shooting layouts.',
+    noteVi: 'Phát triển kịch bản hình ảnh và bố cục quay phim.',
+  },
+  {
+    labelEn: 'Image & Effects',
+    labelVi: 'Hình Ảnh & Hiệu Ứng',
+    tools: ['Adobe Photoshop', 'Adobe After Effects', 'Adobe Illustrator'],
+    noteEn: 'Photo editing, basic design, basic knowledge currently advancing.',
+    noteVi: 'Chỉnh ảnh, thiết kế cơ bản, đang nâng cao kỹ năng.',
+  },
+];
+---
+
+<BaseLayout title="About — Nguyễn Vũ Quốc Hưng" currentPath="/about">
+  <div class="about">
+    <!-- Profile header -->
+    <div class="about__header">
+      <a href="/about" class="about__profile-link" aria-label="Nguyen Vu Quoc Hung">
+        <div class="about__photo-wrap">
+          <img
+            src="/images/profile.png"
+            alt="Nguyễn Vũ Quốc Hưng"
+            class="about__photo"
+            onerror="this.style.display='none'"
+          />
+        </div>
+        <h2 class="about__name">
+          NGUYỄN VŨ<br />QUỐC HƯNG
+        </h2>
+      </a>
+    </div>
+
+    <!-- Content -->
+    <div class="about__content page-enter">
+
+      <!-- Greeting -->
+      <p class="about__greeting">
+        <span class="l-en">Hello, I am Nguyễn Vũ Quốc Hưng.</span>
+        <span class="l-vi">Xin chào, tôi là Nguyễn Vũ Quốc Hưng.</span>
+      </p>
+
+      <!-- Bio -->
+      <p class="about__bio">
+        <span class="l-en">
+          I am on a journey to discover who I am in this vast world, with filmmaking as my chosen path toward that answer.
+          As an emerging filmmaker, I actively seek opportunities across all film crew positions.
+          Combining my skills with an eagerness to learn, I commit myself to excellence in whatever role I undertake.
+        </span>
+        <span class="l-vi">
+          Tôi đang trên hành trình khám phá bản thân trong thế giới rộng lớn này, với điện ảnh là con đường tôi chọn để tìm câu trả lời.
+          Là một nhà làm phim trẻ, tôi chủ động tìm kiếm cơ hội ở mọi vị trí trong đoàn làm phim.
+          Kết hợp kỹ năng với tinh thần học hỏi, tôi cam kết đạt xuất sắc trong mọi vai trò đảm nhận.
+        </span>
+      </p>
+
+      <!-- Quote -->
+      <blockquote class="about__quote">
+        "You only get back what you are prepared to put in."
+        <cite>— Hirokazu Kore-eda</cite>
+      </blockquote>
+
+      <!-- Divider -->
+      <div class="about__divider"></div>
+
+      <!-- Education -->
+      <section class="about__section">
+        <h3 class="about__section-title">
+          <span class="l-en">EDUCATION</span>
+          <span class="l-vi">HỌC VẤN</span>
+        </h3>
+        <ul class="about__list">
+          <li>
+            <span class="l-en">Studying Arts in Film and Television Directing at Van Lang University</span>
+            <span class="l-vi">Đang học Nghệ thuật Đạo diễn Điện ảnh và Truyền hình tại Đại học Văn Lang</span>
+          </li>
+          <li>
+            <span class="l-en">Graduated from Le Quy Don High School, District 3, Ho Chi Minh City</span>
+            <span class="l-vi">Tốt nghiệp THPT Lê Quý Đôn, Quận 3, TP. Hồ Chí Minh</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Filmography -->
+      <section class="about__section">
+        <h3 class="about__section-title">
+          <span class="l-en">FILMOGRAPHY</span>
+          <span class="l-vi">KINH NGHIỆM</span>
+        </h3>
+        <ul class="about__list">
+          <li>
+            <span class="l-en">
+              Former Screenwriter and Video Editor at <strong>FapTV Entertainment Co., Ltd</strong> —
+              a leading Vietnamese entertainment company that specializes in short sitcom comedies
+              and manages three popular YouTube channels: FapTV, Đậu Phộng TV, and Bánh Bao Bự.
+            </span>
+            <span class="l-vi">
+              Cựu biên kịch và dựng phim tại <strong>FapTV Entertainment Co., Ltd</strong> —
+              công ty giải trí hàng đầu Việt Nam chuyên sản xuất phim hài sitcom ngắn,
+              quản lý ba kênh YouTube nổi tiếng: FapTV, Đậu Phộng TV và Bánh Bao Bự.
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Software Proficiency -->
+      <section class="about__section">
+        <h3 class="about__section-title">
+          <span class="l-en">SOFTWARE PROFICIENCY</span>
+          <span class="l-vi">KỸ NĂNG PHẦN MỀM</span>
+        </h3>
+        <div class="about__software-grid">
+          {softwareCategories.map((cat) => (
+            <div class="about__software-cat">
+              <h4 class="about__software-cat-label">
+                <span class="l-en">{cat.labelEn}</span>
+                <span class="l-vi">{cat.labelVi}</span>
+              </h4>
+              <div class="about__tools">
+                {cat.tools.map((tool) => (
+                  <div class="about__tool">
+                    {softwareLogos[tool] && (
+                      <img
+                        src={softwareLogos[tool]}
+                        alt={tool}
+                        class="about__tool-logo"
+                        loading="lazy"
+                        onerror="this.style.display='none'"
+                      />
+                    )}
+                    <span class="about__tool-name">{tool}</span>
+                  </div>
+                ))}
+              </div>
+              <p class="about__software-note">
+                <span class="l-en">{cat.noteEn}</span>
+                <span class="l-vi">{cat.noteVi}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.about {
+  display: grid;
+  grid-template-columns: 38% 62%;
+  min-height: 100vh;
+}
+
+/* Left: sticky profile */
+.about__header {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.about__profile-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  position: relative;
+}
+
+.about__photo-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.about__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  mask-image: linear-gradient(to right, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+}
+
+.about__name {
+  position: relative;
+  z-index: 2;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.92;
+  color: var(--color-accent);
+  letter-spacing: 0.02em;
+  padding: 1.5rem;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s;
+}
+
+.about__profile-link:hover .about__name {
+  color: #ff1a1a;
+}
+
+/* Right: content */
+.about__content {
+  padding: 5rem 3rem 5rem 4rem;
+  max-width: 680px;
+}
+
+.about__greeting {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.about__bio {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 2rem;
+}
+
+.about__quote {
+  border-left: 2px solid var(--color-accent);
+  padding: 0.75rem 0 0.75rem 1.5rem;
+  margin: 2rem 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+}
+
+.about__quote cite {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  font-style: normal;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.05em;
+}
+
+.about__divider {
+  width: 40px;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  margin: 2.5rem 0;
+}
+
+.about__section {
+  margin-bottom: 3rem;
+}
+
+.about__section-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--color-accent);
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+}
+
+.about__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.about__list li {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.6);
+  padding-left: 1rem;
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+.about__list li strong {
+  color: rgba(255,255,255,0.85);
+}
+
+/* Software grid */
+.about__software-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 2.5rem;
+}
+
+.about__software-cat-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.about__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.about__tool {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 0.35rem 0.6rem;
+  transition: border-color 0.2s;
+}
+
+.about__tool:hover {
+  border-color: rgba(255,255,255,0.2);
+}
+
+.about__tool-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.about__tool-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.about__software-note {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.3);
+}
+
+/* i18n */
+[data-lang="en"] .l-vi { display: none; }
+[data-lang="vi"] .l-en { display: none; }
+
+/* Mobile */
+@media (max-width: 900px) {
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .about__header {
+    position: relative;
+    height: 50vh;
+  }
+
+  .about__content {
+    padding: 2.5rem 1.5rem;
+    max-width: 100%;
+  }
+
+  .about__software-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

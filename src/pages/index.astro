@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Nguyễn Vũ Quốc Hưng" currentPath="/" showSidebar={true}>
+  <div class="home">
+    <!-- Language toggle positioned top-right (already in BaseLayout), but override position for home -->
+    <div class="home__lang-area">
+      <!-- LanguageToggle is rendered by BaseLayout -->
+    </div>
+
+    <!-- Left: Profile photo + name -->
+    <a href="/about" class="home__profile" aria-label="About Nguyen Vu Quoc Hung">
+      <div class="home__photo-wrap">
+        <img
+          src="/images/profile.png"
+          alt="Nguyễn Vũ Quốc Hưng"
+          class="home__photo"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+        />
+        <!-- Fallback placeholder -->
+        <div class="home__photo-placeholder" style="display:none">
+          <span>NVQ</span>
+        </div>
+      </div>
+      <h1 class="home__name">
+        NGUYỄN VŨ<br />QUỐC HƯNG
+      </h1>
+    </a>
+
+    <!-- Right: Navigation -->
+    <nav class="home__nav" aria-label="Main navigation">
+      <ul>
+        <li>
+          <a href="/" class="home__nav-link active">
+            <span class="l-en">HOME</span>
+            <span class="l-vi">TRANG CHỦ</span>
+          </a>
+        </li>
+        <li>
+          <a href="/about" class="home__nav-link">
+            <span class="l-en">ABOUT</span>
+            <span class="l-vi">VỀ TÔI</span>
+          </a>
+        </li>
+        <li>
+          <a href="/projects" class="home__nav-link">
+            <span class="l-en">MY PROJECTS</span>
+            <span class="l-vi">DỰ ÁN</span>
+          </a>
+        </li>
+        <li>
+          <a href="/contact" class="home__nav-link">
+            <span class="l-en">CONTACT</span>
+            <span class="l-vi">LIÊN HỆ</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
+</BaseLayout>
+
+<style>
+.home {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Profile area (left) */
+.home__profile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.home__photo-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+.home__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  /* mix-blend-mode for cutout effect if image is B&W on black */
+  mix-blend-mode: normal;
+  transition: transform 0.6s ease;
+  mask-image: linear-gradient(to right, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+}
+
+.home__profile:hover .home__photo {
+  transform: scale(1.02);
+}
+
+.home__photo-placeholder {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+}
+
+.home__name {
+  position: relative;
+  z-index: 2;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.92;
+  color: var(--color-accent);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  text-shadow: none;
+  transition: color 0.2s;
+}
+
+.home__profile:hover .home__name {
+  color: #ff1a1a;
+}
+
+/* Navigation (right) */
+.home__nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 3rem 3rem 4rem;
+}
+
+.home__nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.home__nav-link {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  padding: 0.4rem 0;
+  transition: color 0.2s, letter-spacing 0.2s;
+  position: relative;
+}
+
+.home__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-accent);
+  transition: width 0.3s ease;
+}
+
+.home__nav-link:hover,
+.home__nav-link.active {
+  color: #fff;
+  letter-spacing: 0.25em;
+}
+
+.home__nav-link:hover::after {
+  width: 100%;
+}
+
+.home__nav-link.active {
+  color: rgba(255,255,255,0.4);
+  font-size: 0.85em;
+}
+
+
+/* i18n */
+[data-lang="en"] .l-vi { display: none; }
+[data-lang="vi"] .l-en { display: none; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .home {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+
+  .home__profile {
+    min-height: 65vh;
+  }
+
+  .home__nav {
+    padding: 2rem 1.5rem;
+    align-items: flex-start;
+  }
+}
+</style>

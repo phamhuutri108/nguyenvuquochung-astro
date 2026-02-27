@@ -1,0 +1,140 @@
+---
+---
+<div id="lang-popup" class="lang-popup" aria-modal="true" role="dialog">
+  <div class="lang-popup__backdrop"></div>
+  <div class="lang-popup__box">
+    <p class="lang-popup__title" id="popup-title-en">SELECT YOUR LANGUAGE</p>
+    <p class="lang-popup__title" id="popup-title-vi" style="display:none">CHỌN NGÔN NGỮ</p>
+    <div class="lang-popup__buttons">
+      <button class="lang-popup__btn" data-choose="en">
+        <span class="lang-popup__btn-label">ENGLISH</span>
+      </button>
+      <button class="lang-popup__btn" data-choose="vi">
+        <span class="lang-popup__btn-label">TIẾNG VIỆT</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const popup = document.getElementById('lang-popup');
+
+  function applyLang(lang: string) {
+    document.documentElement.setAttribute('data-lang', lang);
+    sessionStorage.setItem('preferred-lang', lang);
+  }
+
+  function hidePopup() {
+    popup!.classList.add('lang-popup--hidden');
+    setTimeout(() => {
+      popup!.style.display = 'none';
+    }, 400);
+  }
+
+  // Check sessionStorage first
+  const saved = sessionStorage.getItem('preferred-lang');
+  if (saved) {
+    applyLang(saved);
+    popup!.style.display = 'none';
+  } else {
+    // Show popup
+    popup!.classList.remove('lang-popup--hidden');
+  }
+
+  // Button clicks
+  popup!.querySelectorAll<HTMLButtonElement>('[data-choose]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-choose')!;
+      applyLang(lang);
+      hidePopup();
+    });
+  });
+</script>
+
+<style>
+.lang-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease;
+}
+
+.lang-popup--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lang-popup__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.lang-popup__box {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 3rem 4rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(10,10,10,0.9);
+}
+
+.lang-popup__title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2.5rem;
+}
+
+.lang-popup__buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.lang-popup__btn {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.lang-popup__btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+  z-index: -1;
+}
+
+.lang-popup__btn:hover {
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.lang-popup__btn:hover::before {
+  transform: scaleX(1);
+}
+
+.lang-popup__btn-label {
+  position: relative;
+  z-index: 1;
+}
+</style>

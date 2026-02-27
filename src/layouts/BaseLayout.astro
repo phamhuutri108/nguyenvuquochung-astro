@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+import LanguageToggle from '../components/LanguageToggle.astro';
+import LanguagePopup from '../components/LanguagePopup.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+interface Props {
+  title?: string;
+  currentPath?: string;
+  showSidebar?: boolean;
+  description?: string;
+}
+
+const {
+  title = 'Nguyễn Vũ Quốc Hưng',
+  currentPath = '/',
+  showSidebar = true,
+  description = 'Portfolio of Nguyen Vu Quoc Hung — Filmmaker, Director, Producer, Editor',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500&family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet" />
+  <title>{title}</title>
+</head>
+<body>
+  <!-- Language popup (first visit only) -->
+  <LanguagePopup />
+
+  <!-- Language toggle (top right) -->
+  <div class="lang-toggle-wrap">
+    <LanguageToggle />
+  </div>
+
+  <!-- Sidebar (not on home page) -->
+  {showSidebar && <Sidebar currentPath={currentPath} />}
+
+  <!-- Main content -->
+  <main class="main-content page-enter">
+    <slot />
+  </main>
+
+  <!-- Init language from sessionStorage -->
+  <script>
+    const saved = sessionStorage.getItem('preferred-lang') || 'en';
+    document.documentElement.setAttribute('data-lang', saved);
+  </script>
+</body>
+</html>
+
+<style>
+.lang-toggle-wrap {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 450;
+}
+
+/* When sidebar is shown, shift lang toggle left to avoid overlap with hamburger */
+body:has(.sidebar-wrap) .lang-toggle-wrap {
+  right: 4rem;
+}
+
+.main-content {
+  min-height: 100vh;
+}
+
+/* Global i18n rules */
+:global([data-lang="en"] .l-vi) { display: none !important; }
+:global([data-lang="vi"] .l-en) { display: none !important; }
+</style>

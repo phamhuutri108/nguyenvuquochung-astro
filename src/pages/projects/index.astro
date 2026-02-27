@@ -1,0 +1,219 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const roles = [
+  { slug: 'production', en: 'PRODUCTION', vi: 'SẢN XUẤT', color: '#CC0000' },
+  { slug: 'editor', en: 'EDITOR', vi: 'DỰNG PHIM', color: '#2255DD' },
+  { slug: 'director', en: 'DIRECTOR', vi: 'ĐẠO DIỄN', color: '#22AA44' },
+  { slug: 'assistant-director', en: 'ASSISTANT DIRECTOR', vi: 'TRỢ LÝ ĐẠO DIỄN', color: '#DD9900' },
+];
+
+// Generate background word cloud
+const bgWords = [...roles, ...roles, ...roles, ...roles].map((r, i) => ({
+  ...r,
+  top: `${5 + Math.floor((i * 17.3) % 90)}%`,
+  left: `${3 + Math.floor((i * 23.7) % 94)}%`,
+  size: `${2 + (i % 3) * 0.8}rem`,
+  opacity: 0.07 + (i % 4) * 0.02,
+  rotate: `${-15 + (i % 7) * 5}deg`,
+}));
+---
+
+<BaseLayout title="My Projects — Nguyễn Vũ Quốc Hưng" currentPath="/projects">
+  <div class="projects-hub">
+
+    <!-- Background word cloud -->
+    <div class="projects-hub__bg" aria-hidden="true">
+      {bgWords.map((word) => (
+        <span
+          class="projects-hub__bg-word"
+          style={`top:${word.top};left:${word.left};font-size:${word.size};opacity:${word.opacity};transform:rotate(${word.rotate});color:${word.color}`}
+        >
+          <span class="l-en">{word.en}</span>
+          <span class="l-vi">{word.vi}</span>
+        </span>
+      ))}
+    </div>
+
+    <!-- Profile layer -->
+    <a href="/about" class="projects-hub__profile" aria-label="About">
+      <div class="projects-hub__photo-wrap">
+        <img
+          src="/images/profile.png"
+          alt="Nguyễn Vũ Quốc Hưng"
+          class="projects-hub__photo"
+          onerror="this.style.display='none'"
+        />
+      </div>
+      <h2 class="projects-hub__name">
+        NGUYỄN VŨ<br />QUỐC HƯNG
+      </h2>
+    </a>
+
+    <!-- Role category links (overlay) -->
+    <nav class="projects-hub__roles" aria-label="Project categories">
+      {roles.map((role) => (
+        <a
+          href={`/projects/${role.slug}`}
+          class="projects-hub__role-link"
+          style={`--role-color: ${role.color}`}
+        >
+          <span class="l-en">{role.en}</span>
+          <span class="l-vi">{role.vi}</span>
+          <span class="projects-hub__role-arrow">→</span>
+        </a>
+      ))}
+    </nav>
+
+  </div>
+</BaseLayout>
+
+<style>
+.projects-hub {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Background word cloud */
+.projects-hub__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.projects-hub__bg-word {
+  position: absolute;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Profile center */
+.projects-hub__profile {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.projects-hub__photo-wrap {
+  width: 300px;
+  height: 400px;
+  overflow: hidden;
+}
+
+.projects-hub__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(100%);
+  mix-blend-mode: normal;
+}
+
+.projects-hub__name {
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.92;
+  color: rgba(255,255,255,0.15);
+  text-align: center;
+  letter-spacing: 0.02em;
+  margin-top: 0.5rem;
+  text-stroke: 1px rgba(255,255,255,0.3);
+  -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+  -webkit-text-fill-color: transparent;
+  transition: -webkit-text-stroke-color 0.3s;
+}
+
+.projects-hub__profile:hover .projects-hub__name {
+  -webkit-text-stroke-color: rgba(255,255,255,0.6);
+}
+
+/* Role links (right side) */
+.projects-hub__roles {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.projects-hub__role-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s, border-color 0.25s, letter-spacing 0.25s;
+}
+
+.projects-hub__role-link:hover {
+  color: var(--role-color);
+  letter-spacing: 0.22em;
+  border-bottom-color: var(--role-color);
+}
+
+.projects-hub__role-arrow {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.25s, transform 0.25s;
+  font-size: 0.85em;
+}
+
+.projects-hub__role-link:hover .projects-hub__role-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* i18n */
+[data-lang="en"] .l-vi { display: none; }
+[data-lang="vi"] .l-en { display: none; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .projects-hub__roles {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 1.5rem;
+  }
+
+  .projects-hub__profile {
+    margin-bottom: 1rem;
+  }
+
+  .projects-hub {
+    flex-direction: column;
+    padding-top: 3rem;
+  }
+}
+</style>

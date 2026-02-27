@@ -1,0 +1,143 @@
+---
+---
+<div class="lang-toggle">
+  <button class="lang-toggle__trigger" aria-expanded="false" aria-haspopup="listbox" id="lang-toggle-btn">
+    <span class="lang-toggle__current" id="lang-current">EN</span>
+    <span class="lang-toggle__arrow">▾</span>
+  </button>
+  <ul class="lang-toggle__dropdown" role="listbox" id="lang-dropdown">
+    <li>
+      <button class="lang-toggle__option" data-lang="en" role="option">
+        ENGLISH
+      </button>
+    </li>
+    <li>
+      <button class="lang-toggle__option" data-lang="vi" role="option">
+        TIẾNG VIỆT
+      </button>
+    </li>
+  </ul>
+</div>
+
+<script>
+  const btn = document.getElementById('lang-toggle-btn')!;
+  const dropdown = document.getElementById('lang-dropdown')!;
+  const currentLabel = document.getElementById('lang-current')!;
+
+  function getCurrentLang(): string {
+    return sessionStorage.getItem('preferred-lang') || 'en';
+  }
+
+  function updateLabel(lang: string) {
+    currentLabel.textContent = lang.toUpperCase();
+  }
+
+  function setLang(lang: string) {
+    sessionStorage.setItem('preferred-lang', lang);
+    document.documentElement.setAttribute('data-lang', lang);
+    updateLabel(lang);
+    closeDropdown();
+  }
+
+  function openDropdown() {
+    dropdown.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDropdown() {
+    dropdown.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+
+  // Init
+  updateLabel(getCurrentLang());
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.contains('open') ? closeDropdown() : openDropdown();
+  });
+
+  dropdown.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach(opt => {
+    opt.addEventListener('click', () => {
+      setLang(opt.getAttribute('data-lang')!);
+    });
+  });
+
+  document.addEventListener('click', closeDropdown);
+</script>
+
+<style>
+.lang-toggle {
+  position: relative;
+  z-index: 100;
+}
+
+.lang-toggle__trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  background: transparent;
+  border: none;
+  transition: color 0.2s;
+}
+
+.lang-toggle__trigger:hover {
+  color: #fff;
+}
+
+.lang-toggle__arrow {
+  font-size: 0.65rem;
+  transition: transform 0.2s;
+}
+
+.lang-toggle__trigger[aria-expanded="true"] .lang-toggle__arrow {
+  transform: rotate(180deg);
+}
+
+.lang-toggle__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.1);
+  list-style: none;
+  min-width: 140px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+}
+
+.lang-toggle__dropdown.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.lang-toggle__option {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.6);
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+
+.lang-toggle__option:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+}
+</style>
