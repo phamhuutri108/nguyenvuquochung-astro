@@ -3,15 +3,13 @@
 <div id="lang-popup" class="lang-popup" aria-modal="true" role="dialog">
   <div class="lang-popup__backdrop"></div>
   <div class="lang-popup__box">
-    <p class="lang-popup__title" id="popup-title-en">SELECT YOUR LANGUAGE</p>
-    <p class="lang-popup__title" id="popup-title-vi" style="display:none">CHỌN NGÔN NGỮ</p>
+    <p class="lang-popup__eyebrow">NGUYEN VU QUOC HUNG</p>
+    <div class="lang-popup__divider"></div>
+    <p class="lang-popup__prompt">choose your language</p>
     <div class="lang-popup__buttons">
-      <button class="lang-popup__btn" data-choose="en">
-        <span class="lang-popup__btn-label">ENGLISH</span>
-      </button>
-      <button class="lang-popup__btn" data-choose="vi">
-        <span class="lang-popup__btn-label">TIẾNG VIỆT</span>
-      </button>
+      <button class="lang-popup__btn" data-choose="en">EN</button>
+      <span class="lang-popup__sep">—</span>
+      <button class="lang-popup__btn" data-choose="vi">VI</button>
     </div>
   </div>
 </div>
@@ -25,27 +23,21 @@
   }
 
   function hidePopup() {
-    popup!.classList.add('lang-popup--hidden');
-    setTimeout(() => {
-      popup!.style.display = 'none';
-    }, 400);
+    popup!.classList.add('lang-popup--out');
+    setTimeout(() => { popup!.style.display = 'none'; }, 600);
   }
 
-  // Check sessionStorage first
   const saved = sessionStorage.getItem('preferred-lang');
   if (saved) {
     applyLang(saved);
     popup!.style.display = 'none';
   } else {
-    // Show popup
-    popup!.classList.remove('lang-popup--hidden');
+    requestAnimationFrame(() => popup!.classList.add('lang-popup--in'));
   }
 
-  // Button clicks
   popup!.querySelectorAll<HTMLButtonElement>('[data-choose]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const lang = btn.getAttribute('data-choose')!;
-      applyLang(lang);
+      applyLang(btn.getAttribute('data-choose')!);
       hidePopup();
     });
   });
@@ -59,10 +51,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
 }
 
-.lang-popup--hidden {
+.lang-popup--in {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lang-popup--out {
   opacity: 0;
   pointer-events: none;
 }
@@ -70,71 +69,89 @@
 .lang-popup__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .lang-popup__box {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 3rem 4rem;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(10,10,10,0.9);
+  padding: 2.25rem 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
 }
 
-.lang-popup__title {
+.lang-popup__eyebrow {
   font-family: 'Oswald', sans-serif;
-  font-size: clamp(0.85rem, 2vw, 1rem);
-  letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 2.5rem;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  color: rgba(255,255,255,0.2);
+  margin-bottom: 1.1rem;
+}
+
+.lang-popup__divider {
+  width: 24px;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin-bottom: 1.1rem;
+}
+
+.lang-popup__prompt {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 1.75rem;
 }
 
 .lang-popup__buttons {
   display: flex;
-  gap: 1.5rem;
-  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
 }
 
 .lang-popup__btn {
   font-family: 'Oswald', sans-serif;
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  color: #fff;
-  padding: 0.75rem 2rem;
-  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.45);
   background: transparent;
+  border: none;
   cursor: pointer;
-  transition: all 0.25s ease;
+  padding: 0.25rem 0;
+  transition: color 0.2s ease;
   position: relative;
-  overflow: hidden;
 }
 
-.lang-popup__btn::before {
+.lang-popup__btn::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: var(--color-accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.25s ease;
-  z-index: -1;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #fff;
+  transition: width 0.25s ease;
 }
 
 .lang-popup__btn:hover {
-  border-color: var(--color-accent);
   color: #fff;
 }
 
-.lang-popup__btn:hover::before {
-  transform: scaleX(1);
+.lang-popup__btn:hover::after {
+  width: 100%;
 }
 
-.lang-popup__btn-label {
-  position: relative;
-  z-index: 1;
+.lang-popup__sep {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.12);
+  user-select: none;
 }
 </style>
