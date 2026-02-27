@@ -7,11 +7,6 @@ backend:
   base_url: https://api.netlify.com
   auth_endpoint: auth
 
-# LOCAL DEVELOPMENT: Enables editing at http://localhost:4321/admin/
-# without needing GitHub auth. Run: npx decap-server (in a separate terminal)
-# Comment this out before deploying to production.
-local_backend: true
-
 # Where uploaded media is stored
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
