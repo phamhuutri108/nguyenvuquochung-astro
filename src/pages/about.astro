@@ -222,17 +222,15 @@ const softwareCategories = [
 .about__photo-wrap {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: flex-end;
 }
 
-/* Transparent PNG: height = 100%, width natural, no mask needed */
 .about__photo {
+  width: 100%;
   height: 100%;
-  width: auto;
-  display: block;
-  object-fit: contain;
-  object-position: bottom center;
+  object-fit: cover;
+  object-position: top center;
+  mask-image: linear-gradient(to right, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
 }
 
 .about__name {
